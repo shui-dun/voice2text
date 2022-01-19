@@ -34,6 +34,8 @@ class Recorder:
     # 结束录制、保存文件
     def save(self, path):
         self.isFinished = True
+        if len(self.voices) == 0:
+            return
         data = np.hstack(self.voices)
         if os.path.exists(path):
             os.remove(path)

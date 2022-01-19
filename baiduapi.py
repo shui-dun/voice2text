@@ -33,7 +33,7 @@ def getToken():
     curTime = time.time()
     secondInterval = curTime - tokenJson["time"]
     dayInterval = secondInterval / 60 / 60 / 24
-    if dayInterval > 0.0001:
+    if dayInterval > 20:
         return newToken()
     else:
         return tokenJson["token"]
