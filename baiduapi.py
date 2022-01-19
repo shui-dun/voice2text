@@ -4,29 +4,40 @@ import time
 import os
 import base64
 from baiduKey import *
+import PySimpleGUI as sg
+
+baiduTokenPath = "baiduToken.json"
+
 
 # 获得新的token，token过期时调用
 def newToken():
     tokenUrl = "https://openapi.baidu.com/oauth/2.0/token"
     para = {"grant_type": "client_credentials", "client_id": apiKey, "client_secret": secretKey}
-    response = requests.post(tokenUrl, params=para)
-    return response.json()["access_token"]
+    try:
+        response = requests.post(tokenUrl, params=para)
+        token = response.json()["access_token"]
+        newJson = {"token": token, "time": time.time()}
+        with open(baiduTokenPath, "w") as f:
+            json.dump(newJson, f)
+        return token
+    except Exception as e:
+        sg.popup_error("error in newToken", e)
+
 
 # 获取token
 def getToken():
-    with open("baiduToken.json") as f:
+    if not os.path.exists(baiduTokenPath):
+        return newToken()
+    with open(baiduTokenPath) as f:
         tokenJson = json.load(f)
     curTime = time.time()
     secondInterval = curTime - tokenJson["time"]
     dayInterval = secondInterval / 60 / 60 / 24
-    if dayInterval > 20:
-        token = newToken()
-        newJson = {"token": token, "time": curTime}
-        with open("baiduToken.json", "w") as f:
-            json.dump(newJson, f)
-        return token
+    if dayInterval > 0.0001:
+        return newToken()
     else:
         return tokenJson["token"]
+
 
 def voice2text(voiceFile):
     """
@@ -47,5 +58,9 @@ def voice2text(voiceFile):
         "speech": base64.b64encode(voice).decode('utf-8')
     }
     url = "https://vop.baidu.com/pro_api"
-    response = requests.post(url, json=json)
-    return response.json()["result"]
+    try:
+        response = requests.post(url, json=json)
+        return response.json()["result"]
+    except Exception as e:
+        sg.popup_error("error in voice2text", e)
+        return [""]
