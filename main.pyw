@@ -12,12 +12,10 @@ STOPPED = 1
 # 当前状态
 curStatus = STOPPED
 
-layout = [[sg.Button("start", key='button')]]
+layout = [[sg.Button("开始录制", key='record')],
+          [sg.Button("退出", key="quit")]]
 
 window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True)
-
-# 按q退出
-window.bind("<q>", "quit")
 
 # 音频记录器
 recorder = None
@@ -28,17 +26,17 @@ audioName = "temp.wav"
 while True:
     event, value = window.Read()
     # 按下了按钮
-    if event == 'button':
+    if event == 'record':
         if curStatus == STOPPED:
             recorder = Recorder()
             recorder.start()
-            window.Element('button').Update("stop")
+            window.Element('record').Update("停止录制")
             curStatus = RECORDING
         elif curStatus == RECORDING:
             recorder.save(audioName)
             result = voice2text(audioName)
             pyperclip.copy(result[0])
-            window.Element('button').Update("start")
+            window.Element('record').Update("开始录制")
             recorder = None
             curStatus = STOPPED
     # 离开
