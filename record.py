@@ -1,16 +1,19 @@
 import os.path
+import threading
 
 import numpy as np
 import soundcard as sc
 import soundfile as sf
-from scipy.io.wavfile import write
-import threading
-import time
 
 
 class Recorder:
+    # 采样频率
     samplerate = 16000
+
+    # 是否完成
     isFinished = False
+
+    # 音频片段列表
     voices = []
 
     def _record(self):
@@ -21,10 +24,12 @@ class Recorder:
             if self.isFinished:
                 break
 
+    # 开始录制
     def start(self):
         thread = threading.Thread(target=self._record)
         thread.start()
 
+    # 结束录制、保存文件
     def save(self, path):
         self.isFinished = True
         data = np.hstack(self.voices)

@@ -5,14 +5,14 @@ import os
 import base64
 from baiduKey import *
 
-
+# 获得新的token，token过期时调用
 def newToken():
     tokenUrl = "https://openapi.baidu.com/oauth/2.0/token"
     para = {"grant_type": "client_credentials", "client_id": apiKey, "client_secret": secretKey}
     response = requests.post(tokenUrl, params=para)
     return response.json()["access_token"]
 
-
+# 获取token
 def getToken():
     with open("baiduToken.json") as f:
         tokenJson = json.load(f)
@@ -28,8 +28,12 @@ def getToken():
     else:
         return tokenJson["token"]
 
-
 def voice2text(voiceFile):
+    """
+    将音频转化为文本
+    :param voiceFile: 音频文件的路径
+    :return: 转化为的文本
+    """
     with open(voiceFile, "rb") as f:
         voice = f.read()
     json = {
