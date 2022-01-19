@@ -27,6 +27,8 @@ class Recorder:
     # 开始录制
     def start(self):
         thread = threading.Thread(target=self._record)
+        # 设置此线程被主线程回收
+        thread.setDaemon(True)
         thread.start()
 
     # 结束录制、保存文件
