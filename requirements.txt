@@ -1,0 +1,6 @@
+requests
+pyperclip
+PySimpleGUI
+numpy
+soundcard
+soundfile
