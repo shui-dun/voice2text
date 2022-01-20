@@ -1,6 +1,7 @@
 import baiduapi
 import xunfeiapi
 from record import Recorder
+from player import Player
 import pyperclip
 import os
 import PySimpleGUI as sg
@@ -12,16 +13,23 @@ sg.set_options(font=('Consolas', 10))
 START_RECORD = "开始录制"
 STOP_RECORD = "停止录制"
 
+START_PLAY = "开始播放"
+STOP_PLAY = "停止播放"
+
 layout = [[sg.Button(START_RECORD, key='record'),
            sg.Combo([Recorder.SYSTEM_AUDIO, Recorder.MIC_AUDIO], default_value=Recorder.SYSTEM_AUDIO, key='audioSource',
                     readonly=True, size=(8, 1))],
-          [sg.Button("复制文本", key='copyText'), sg.Button("退出", key="quit")]]
+          [sg.Button("复制文本", key='copyText'), sg.Button(START_PLAY, key="play")],
+          [sg.Button("退出", key="quit", size=(16, 1))]]
 
 window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True,
                    location=(20, 70))
 
 # 音频记录器
 recorder = None
+
+# 音频播放器
+player = None
 
 # 音频保存位置
 audioName = "temp.wav"
@@ -45,6 +53,15 @@ while True:
         # result = baiduapi.voice2text(audioName)
         result = xunfeiapi.voice2text(audioName)
         pyperclip.copy(result)
+    elif event == 'play':
+        if window.Element('play').get_text() == START_PLAY:
+            player = Player(audioName)
+            player.start()
+            window.Element('play').Update(STOP_PLAY)
+        elif window.Element('play').get_text() == STOP_PLAY:
+            player.stop()
+            player = None
+            window.Element('play').Update(START_PLAY)
     # 离开
     elif event == 'quit':
         break

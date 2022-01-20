@@ -21,13 +21,14 @@ class Recorder:
         # 音频片段列表
         self.voices = []
 
-    def _record(self):
+    def __record(self):
         if self.source == self.SYSTEM_AUDIO:
             mic = sc.get_microphone(sc.default_speaker().name, include_loopback=True)
         elif self.source == self.MIC_AUDIO:
             mic = sc.default_microphone()
         with mic.recorder(samplerate=self.samplerate) as recorder:
             while True:
+                # 只取第一个channel
                 newVoice = recorder.record(numframes=self.samplerate)[:, 0]
                 self.voices.append(newVoice)
                 if self.isFinished:
@@ -35,7 +36,7 @@ class Recorder:
 
     # 开始录制
     def start(self):
-        thread = threading.Thread(target=self._record)
+        thread = threading.Thread(target=self.__record)
         # 设置此线程被主线程回收
         thread.setDaemon(True)
         thread.start()
