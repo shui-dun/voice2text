@@ -5,4 +5,10 @@ numpy
 soundcard
 soundfile
 pywin32
+cffi
+gevent
+greenlet
+pycparser
+six
+websocket
 websocket-client

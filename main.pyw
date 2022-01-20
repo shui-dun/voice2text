@@ -18,7 +18,7 @@ layout = [[sg.Button(START_RECORD, key='record'),
           [sg.Button("复制文本", key='copyText'), sg.Button("退出", key="quit")]]
 
 window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True,
-                   location=(100, 100))
+                   location=(20, 70))
 
 # 音频记录器
 recorder = None
