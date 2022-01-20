@@ -11,7 +11,7 @@ STOP_RECORD = "停止录制"
 layout = [[sg.Button(START_RECORD, key='record'),
            sg.Combo([Recorder.SYSTEM_AUDIO, Recorder.MIC_AUDIO], default_value=Recorder.SYSTEM_AUDIO, key='audioSource',
                     readonly=True, size=(8, 1))],
-          [sg.Button("复制音频", key='copyAudio'), sg.Button("退出", key="quit")]]
+          [sg.Button("复制文本", key='copyText'), sg.Button("退出", key="quit")]]
 
 window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True)
 
@@ -31,14 +31,14 @@ while True:
             window.Element('record').Update(STOP_RECORD)
         elif window.Element('record').get_text() == STOP_RECORD:
             recorder.save(audioName)
-            result = voice2text(audioName)
-            pyperclip.copy(result[0])
-            window.Element('record').Update(START_RECORD)
+            filePath = os.getcwd() + "\\" + audioName
+            copy2clip.clip_files([filePath])
             recorder = None
-    # 复制音频文件
-    elif event == 'copyAudio':
-        filePath = os.getcwd() + "\\" + audioName
-        copy2clip.clip_files([filePath])
+            window.Element('record').Update(START_RECORD)
+    # 复制识别到的文本
+    elif event == 'copyText':
+        result = voice2text(audioName)
+        pyperclip.copy(result[0])
     # 离开
     elif event == 'quit':
         break
