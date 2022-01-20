@@ -1,7 +1,6 @@
 import baiduapi
 import xunfeiapi
 from record import Recorder
-from player import Player
 import pyperclip
 import os
 import PySimpleGUI as sg
@@ -15,7 +14,7 @@ layout = [[sg.Button(START_RECORD, key='record', size=(10, 1)),
            sg.Combo([XUNFEI_API, BAIDU_API], default_value=defaultTextRecognition, key='textSource', readonly=True,
                     size=(10, 1))],
           [sg.Button("复制音频", key='copyAudio', size=(10, 1)),
-           sg.Button(START_PLAY, key="play", size=(10, 1))],
+           sg.Button("打开音频", key="play", size=(10, 1))],
           [sg.Text("录制结束后", size=(10, 1)),
            sg.Combo([COPY_TEXT_AFTER_RECORD, COPY_AUDIO_AFTER_RECORD, NOTHING_AFTER_RECORD],
                     default_value=defaultBehaviorAfterRecord, key="behaviorAfterRecord",
@@ -72,14 +71,7 @@ while True:
         copyText(value['textSource'])
     # 播放
     elif event == 'play':
-        if window.Element('play').get_text() == START_PLAY:
-            player = Player(audioName)
-            player.start()
-            window.Element('play').Update(STOP_PLAY)
-        elif window.Element('play').get_text() == STOP_PLAY:
-            player.stop()
-            player = None
-            window.Element('play').Update(START_PLAY)
+        os.startfile(audioName)
     # 复制音频
     elif event == 'copyAudio':
         copyAudio()
