@@ -8,15 +8,14 @@ import PySimpleGUI as sg
 import copy2clip
 from config import *
 
-layout = [[sg.Button(START_RECORD, key='record')],
-          [sg.Combo([SYSTEM_AUDIO, MIC_AUDIO], default_value=defaultRecordSource, key='audioSource',
-                    readonly=True, size=(8, 1))],
-          [sg.Button("复制文本", key='copyText')],
-          [sg.Combo([XUNFEI_API, BAIDU_API], default_value=defaultTextRecognition,
-                    key='textSource', readonly=True, size=(8, 1))],
-          [sg.Button("复制音频", key='copyAudio')],
-          [sg.Button(START_PLAY, key="play")],
-          [sg.Button("  退出  ", key="quit")]]
+layout = [[sg.Button(START_RECORD, key='record'),
+           sg.Combo([SYSTEM_AUDIO, MIC_AUDIO], default_value=defaultRecordSource, key='audioSource', readonly=True,
+                    size=(8, 1))],
+          [sg.Button("复制文本", key='copyText'),
+           sg.Combo([XUNFEI_API, BAIDU_API], default_value=defaultTextRecognition, key='textSource', readonly=True,
+                    size=(8, 1))],
+          [sg.Button("复制音频", key='copyAudio'), sg.Button(START_PLAY, key="play")],
+          [sg.Button("退出", key="quit"), sg.Text("语音识别助手")]]
 
 window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True,
                    location=(20, 70))

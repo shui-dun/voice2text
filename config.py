@@ -9,7 +9,7 @@ sg.set_options(font=('Consolas', 10))
 START_RECORD = "开始录制"
 STOP_RECORD = "停止录制"
 
-START_PLAY = "开始播放"
+START_PLAY = "播放音频"
 STOP_PLAY = "停止播放"
 
 # 音频保存位置
@@ -25,4 +25,4 @@ BAIDU_API = "百度api"
 XUNFEI_API = "讯飞api"
 
 # 默认语音识别api
-defaultTextRecognition = XUNFEI_API
+defaultTextRecognition = BAIDU_API
