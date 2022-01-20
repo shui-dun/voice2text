@@ -10,7 +10,7 @@ STOP_RECORD = "停止录制"
 
 layout = [[sg.Button(START_RECORD, key='record'),
            sg.Combo([Recorder.SYSTEM_AUDIO, Recorder.MIC_AUDIO], default_value=Recorder.SYSTEM_AUDIO, key='audioSource',
-                    size=(8, 1))],
+                    readonly=True, size=(8, 1))],
           [sg.Button("复制音频", key='copyAudio'), sg.Button("退出", key="quit")]]
 
 window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True)
