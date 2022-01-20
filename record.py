@@ -6,11 +6,10 @@ import numpy as np
 import soundcard as sc
 import soundfile as sf
 
+from config import SYSTEM_AUDIO, MIC_AUDIO
+
 
 class Recorder:
-    SYSTEM_AUDIO = "系统音频"
-    MIC_AUDIO = "麦克风"
-
     # 采样频率
     samplerate = 16000
 
@@ -22,9 +21,9 @@ class Recorder:
         self.voices = []
 
     def __record(self):
-        if self.source == self.SYSTEM_AUDIO:
+        if self.source == SYSTEM_AUDIO:
             mic = sc.get_microphone(sc.default_speaker().name, include_loopback=True)
-        elif self.source == self.MIC_AUDIO:
+        elif self.source == MIC_AUDIO:
             mic = sc.default_microphone()
         with mic.recorder(samplerate=self.samplerate) as recorder:
             while True:

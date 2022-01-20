@@ -8,11 +8,15 @@ import PySimpleGUI as sg
 import copy2clip
 from config import *
 
-layout = [[sg.Button(START_RECORD, key='record'),
-           sg.Combo([Recorder.SYSTEM_AUDIO, Recorder.MIC_AUDIO], default_value=defaultRecordSource, key='audioSource',
+layout = [[sg.Button(START_RECORD, key='record')],
+          [sg.Combo([SYSTEM_AUDIO, MIC_AUDIO], default_value=defaultRecordSource, key='audioSource',
                     readonly=True, size=(8, 1))],
-          [sg.Button("复制文本", key='copyText'), sg.Button(START_PLAY, key="play")],
-          [sg.Button("退出", key="quit", size=(16, 1))]]
+          [sg.Button("复制文本", key='copyText')],
+          [sg.Combo([XUNFEI_API, BAIDU_API], default_value=defaultTextRecognition,
+                    key='textSource', readonly=True, size=(8, 1))],
+          [sg.Button("复制音频", key='copyAudio')],
+          [sg.Button(START_PLAY, key="play")],
+          [sg.Button("  退出  ", key="quit")]]
 
 window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True,
                    location=(20, 70))
@@ -33,14 +37,14 @@ while True:
             window.Element('record').Update(STOP_RECORD)
         elif window.Element('record').get_text() == STOP_RECORD:
             recorder.save(audioName)
-            filePath = os.getcwd() + "\\" + audioName
-            copy2clip.clip_files([filePath])
             recorder = None
             window.Element('record').Update(START_RECORD)
     # 复制识别到的文本
     elif event == 'copyText':
-        # result = baiduapi.voice2text(audioName)
-        result = xunfeiapi.voice2text(audioName)
+        if value['textSource'] == BAIDU_API:
+            result = baiduapi.voice2text(audioName)
+        elif value['textSource'] == XUNFEI_API:
+            result = xunfeiapi.voice2text(audioName)
         pyperclip.copy(result)
     elif event == 'play':
         if window.Element('play').get_text() == START_PLAY:
@@ -51,6 +55,9 @@ while True:
             player.stop()
             player = None
             window.Element('play').Update(START_PLAY)
+    elif event == 'copyAudio':
+        filePath = os.getcwd() + "\\" + audioName
+        copy2clip.clip_files([filePath])
     # 离开
     elif event == 'quit':
         break

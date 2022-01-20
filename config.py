@@ -1,5 +1,4 @@
 import PySimpleGUI as sg
-from record import Recorder
 
 # 主题
 sg.theme("Default1")
@@ -16,5 +15,14 @@ STOP_PLAY = "停止播放"
 # 音频保存位置
 audioName = "temp.wav"
 
+SYSTEM_AUDIO = "系统音频"
+MIC_AUDIO = "麦克风"
+
 # 默认录制设备
-defaultRecordSource = Recorder.SYSTEM_AUDIO
+defaultRecordSource = SYSTEM_AUDIO
+
+BAIDU_API = "百度api"
+XUNFEI_API = "讯飞api"
+
+# 默认语音识别api
+defaultTextRecognition = XUNFEI_API
