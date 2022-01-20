@@ -27,6 +27,22 @@ recorder = None
 # 音频播放器
 player = None
 
+
+# 语音识别成文字并复制
+def copyText(source):
+    if source == BAIDU_API:
+        result = baiduapi.voice2text(audioName)
+    elif source == XUNFEI_API:
+        result = xunfeiapi.voice2text(audioName)
+    pyperclip.copy(result)
+
+
+# 复制音频文件
+def copyAudio():
+    filePath = os.getcwd() + "\\" + audioName
+    copy2clip.clip_files([filePath])
+
+
 while True:
     event, value = window.Read()
     # 按下了录制按钮
@@ -39,13 +55,14 @@ while True:
             recorder.save(audioName)
             recorder = None
             window.Element('record').Update(START_RECORD)
+            # 录制结束后顺便复制识别到的文本
+            copyText(value['textSource'])
+            # 或者在录制结束后顺便复制音频文件
+            # copyAudio()
     # 复制识别到的文本
     elif event == 'copyText':
-        if value['textSource'] == BAIDU_API:
-            result = baiduapi.voice2text(audioName)
-        elif value['textSource'] == XUNFEI_API:
-            result = xunfeiapi.voice2text(audioName)
-        pyperclip.copy(result)
+        copyText(value['textSource'])
+    # 播放
     elif event == 'play':
         if window.Element('play').get_text() == START_PLAY:
             player = Player(audioName)
@@ -55,9 +72,9 @@ while True:
             player.stop()
             player = None
             window.Element('play').Update(START_PLAY)
+    # 复制音频
     elif event == 'copyAudio':
-        filePath = os.getcwd() + "\\" + audioName
-        copy2clip.clip_files([filePath])
+        copyAudio()
     # 离开
     elif event == 'quit':
         break
