@@ -26,3 +26,10 @@ XUNFEI_API = "讯飞api"
 
 # 默认语音识别api
 defaultTextRecognition = XUNFEI_API
+
+COPY_TEXT_AFTER_RECORD = "复制文本"
+COPY_AUDIO_AFTER_RECORD = "复制音频"
+NOTHING_AFTER_RECORD = "不执行操作"
+
+# 在录制结束后自动执行的操作
+defaultBehaviorAfterRecord = COPY_TEXT_AFTER_RECORD
