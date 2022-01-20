@@ -25,11 +25,12 @@ class Recorder:
             mic = sc.get_microphone(sc.default_speaker().name, include_loopback=True)
         elif self.source == self.MIC_AUDIO:
             mic = sc.default_microphone()
-        while True:
-            newVoice = mic.record(samplerate=self.samplerate, numframes=self.samplerate)[:, 0]
-            self.voices.append(newVoice)
-            if self.isFinished:
-                break
+        with mic.recorder(samplerate=self.samplerate) as recorder:
+            while True:
+                newVoice = recorder.record(numframes=self.samplerate)[:, 0]
+                self.voices.append(newVoice)
+                if self.isFinished:
+                    break
 
     # 开始录制
     def start(self):
