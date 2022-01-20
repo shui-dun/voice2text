@@ -58,8 +58,12 @@ def voice2text(voiceFile):
     }
     url = "http://vop.baidu.com/server_api"
     try:
-        response = requests.post(url, json=json)
-        return response.json()["result"]
+        response = requests.post(url, json=json).json()
+        if response["err_no"] != 0:
+            sg.popup_error("error in voice2text", response["err_msg"])
+            print("xixi")
+            return [""]
+        return response["result"]
     except Exception as e:
         sg.popup_error("error in voice2text", e)
         return [""]
