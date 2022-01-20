@@ -1,5 +1,6 @@
 import os.path
 import threading
+import time
 
 import numpy as np
 import soundcard as sc
@@ -41,6 +42,7 @@ class Recorder:
 
     # 结束录制、保存文件
     def save(self, path):
+        time.sleep(0.5)
         self.isFinished = True
         if len(self.voices) == 0:
             return
