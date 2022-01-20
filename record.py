@@ -7,17 +7,24 @@ import soundfile as sf
 
 
 class Recorder:
+    SYSTEM_AUDIO = "系统音频"
+    MIC_AUDIO = "麦克风"
+
     # 采样频率
     samplerate = 16000
 
-    # 是否完成
-    isFinished = False
-
-    # 音频片段列表
-    voices = []
+    def __init__(self, source):
+        self.source = source
+        # 是否完成
+        self.isFinished = False
+        # 音频片段列表
+        self.voices = []
 
     def _record(self):
-        mic = sc.get_microphone(sc.default_speaker().name, include_loopback=True)
+        if self.source == self.SYSTEM_AUDIO:
+            mic = sc.get_microphone(sc.default_speaker().name, include_loopback=True)
+        elif self.source == self.MIC_AUDIO:
+            mic = sc.default_microphone()
         while True:
             newVoice = mic.record(samplerate=self.samplerate, numframes=self.samplerate)[:, 0]
             self.voices.append(newVoice)
