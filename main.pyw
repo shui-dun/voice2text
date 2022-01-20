@@ -5,6 +5,9 @@ import os
 import PySimpleGUI as sg
 import copy2clip
 
+sg.theme("Default1")
+sg.set_options(font=('Consolas', 10))
+
 START_RECORD = "开始录制"
 STOP_RECORD = "停止录制"
 
@@ -13,7 +16,8 @@ layout = [[sg.Button(START_RECORD, key='record'),
                     readonly=True, size=(8, 1))],
           [sg.Button("复制文本", key='copyText'), sg.Button("退出", key="quit")]]
 
-window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True)
+window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True,
+                   location=(100, 100))
 
 # 音频记录器
 recorder = None
