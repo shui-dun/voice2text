@@ -5,3 +5,4 @@ numpy
 soundcard
 soundfile
 pywin32
+websocket-client

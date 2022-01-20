@@ -8,6 +8,7 @@ import PySimpleGUI as sg
 
 baiduTokenPath = "baiduToken.json"
 
+
 # 获得新的token，token过期时调用
 def newToken():
     tokenUrl = "https://openapi.baidu.com/oauth/2.0/token"
@@ -60,8 +61,8 @@ def voice2text(voiceFile):
         response = requests.post(url, json=json).json()
         if response["err_no"] != 0:
             sg.popup("error in voice2text", response["err_msg"])
-            return [""]
-        return response["result"]
+            return ""
+        return response["result"][0]
     except Exception as e:
         sg.popup("error in voice2text", e)
-        return [""]
+        return ""

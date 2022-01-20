@@ -1,4 +1,5 @@
-from baiduapi import voice2text
+import baiduapi
+import xunfeiapi
 from record import Recorder
 import pyperclip
 import os
@@ -41,8 +42,9 @@ while True:
             window.Element('record').Update(START_RECORD)
     # 复制识别到的文本
     elif event == 'copyText':
-        result = voice2text(audioName)
-        pyperclip.copy(result[0])
+        # result = baiduapi.voice2text(audioName)
+        result = xunfeiapi.voice2text(audioName)
+        pyperclip.copy(result)
     # 离开
     elif event == 'quit':
         break

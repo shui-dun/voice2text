@@ -3,8 +3,8 @@
 ## 安装方法
 
 - clone该项目
-- 在百度大脑申请[语音识别api](https://ai.baidu.com/tech/speech)
-- 创建 `baiduKey.py` 文件，添加百度大脑的 `apiKey` 和 `secretKey` 两个变量
+- 申请讯飞语音听写的api，并创建 `xunfeikey.py` 文件，添加 `APPID`、`APIKey` 和 `APISecret`三个变量
+- 或者在百度大脑申请[语音识别api](https://ai.baidu.com/tech/speech)，并创建 `baiduKey.py` 文件，添加百度大脑的 `apiKey` 和 `secretKey` 两个变量。但讯飞的效果好很多
 - `pip install -r requirements.txt`
 
 ## 功能
