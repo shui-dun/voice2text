@@ -1,14 +1,15 @@
 from baiduapi import voice2text
 from record import Recorder
 import pyperclip
-
+import os
 import PySimpleGUI as sg
+import copy2clip
 
 START_RECORD = "开始录制"
 STOP_RECORD = "停止录制"
 
 layout = [[sg.Button(START_RECORD, key='record')],
-          [sg.Button("退出", key="quit")]]
+          [sg.Button("复制音频", key='copyAudio'), sg.Button("退出", key="quit")]]
 
 window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True)
 
@@ -20,7 +21,7 @@ audioName = "temp.wav"
 
 while True:
     event, value = window.Read()
-    # 按下了按钮
+    # 按下了录制按钮
     if event == 'record':
         if window.Element('record').get_text() == START_RECORD:
             recorder = Recorder()
@@ -32,6 +33,9 @@ while True:
             pyperclip.copy(result[0])
             window.Element('record').Update(START_RECORD)
             recorder = None
+    elif event == 'copyAudio':
+        filePath = os.getcwd() + "\\" + audioName
+        copy2clip.clip_files([filePath])
     # 离开
     elif event == 'quit':
         break

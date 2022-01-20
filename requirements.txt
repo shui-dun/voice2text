@@ -4,3 +4,4 @@ PySimpleGUI
 numpy
 soundcard
 soundfile
+pywin32
