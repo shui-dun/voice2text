@@ -25,4 +25,4 @@ BAIDU_API = "百度api"
 XUNFEI_API = "讯飞api"
 
 # 默认语音识别api
-defaultTextRecognition = BAIDU_API
+defaultTextRecognition = XUNFEI_API
