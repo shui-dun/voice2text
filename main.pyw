@@ -6,18 +6,10 @@ import pyperclip
 import os
 import PySimpleGUI as sg
 import copy2clip
-
-sg.theme("Default1")
-sg.set_options(font=('Consolas', 10))
-
-START_RECORD = "开始录制"
-STOP_RECORD = "停止录制"
-
-START_PLAY = "开始播放"
-STOP_PLAY = "停止播放"
+from config import *
 
 layout = [[sg.Button(START_RECORD, key='record'),
-           sg.Combo([Recorder.SYSTEM_AUDIO, Recorder.MIC_AUDIO], default_value=Recorder.SYSTEM_AUDIO, key='audioSource',
+           sg.Combo([Recorder.SYSTEM_AUDIO, Recorder.MIC_AUDIO], default_value=defaultRecordSource, key='audioSource',
                     readonly=True, size=(8, 1))],
           [sg.Button("复制文本", key='copyText'), sg.Button(START_PLAY, key="play")],
           [sg.Button("退出", key="quit", size=(16, 1))]]
@@ -30,9 +22,6 @@ recorder = None
 
 # 音频播放器
 player = None
-
-# 音频保存位置
-audioName = "temp.wav"
 
 while True:
     event, value = window.Read()

@@ -7,6 +7,7 @@ import soundcard as sc
 import soundfile as sf
 
 
+# 播放器
 class Player:
 
     def __init__(self, path):
@@ -27,11 +28,13 @@ class Player:
                     break
                 second += 1
 
+    # 开始播放
     def start(self):
         thread = threading.Thread(target=self.__speak)
         # 设置此线程被主线程回收
         # thread.setDaemon(True)
         thread.start()
 
+    # 停止播放
     def stop(self):
         self.isFinished = True
