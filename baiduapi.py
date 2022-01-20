@@ -53,11 +53,10 @@ def voice2text(voiceFile):
         "channel": 1,
         "cuid": "0ea138e3-aa68-405b-9253-36d6c8e6a31a",
         "token": getToken(),
-        "dev_pid": 80001,
         "len": os.path.getsize(voiceFile),
         "speech": base64.b64encode(voice).decode('utf-8')
     }
-    url = "https://vop.baidu.com/pro_api"
+    url = "http://vop.baidu.com/server_api"
     try:
         response = requests.post(url, json=json)
         return response.json()["result"]
