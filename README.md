@@ -25,8 +25,8 @@
 
 - 迷你模式
 
-![image-20220121112237788](assets/image-20220121112237788.png)
+![mini](assets/mini.png)
 
 - 完整模式
 
-![image-20220121112253362](assets/image-20220121112253362.png)
+![full](assets/full.png)
