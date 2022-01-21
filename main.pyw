@@ -24,7 +24,7 @@ layoutMini = [[sg.Button(START_RECORD, key='miniRecord'), sg.Button("完整模�
 
 layout = [[sg.Column(layoutFull, key='fullLayout', visible=False), sg.Column(layoutMini, key='miniLayout')]]
 
-window = sg.Window('v2t', layout, keep_on_top=True,use_custom_titlebar=True, grab_anywhere=True, finalize=True,
+window = sg.Window('V2T', layout, keep_on_top=True,use_custom_titlebar=True, grab_anywhere=True, finalize=True,
                    location=(20, 70))
 
 # 音频记录器
