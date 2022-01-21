@@ -17,11 +17,9 @@ layout = [[sg.Button(START_RECORD, key='record', size=(10, 1)),
           [sg.Text("录制结束后", size=(10, 1)),
            sg.Combo([COPY_TEXT_AFTER_RECORD, COPY_AUDIO_AFTER_RECORD, NOTHING_AFTER_RECORD],
                     default_value=defaultBehaviorAfterRecord, key="behaviorAfterRecord",
-                    readonly=True, size=(10, 1))],
-          [sg.Text("voice2text", size=(10, 1)),
-           sg.Button("退出", key="quit", size=(10, 1))]]
+                    readonly=True, size=(10, 1))]]
 
-window = sg.Window('window name', layout, no_titlebar=True, keep_on_top=True, grab_anywhere=True, finalize=True,
+window = sg.Window('v2t', layout, keep_on_top=True, grab_anywhere=True, finalize=True,
                    location=(20, 70))
 
 # 音频记录器
@@ -74,6 +72,5 @@ while True:
     # 复制音频
     elif event == 'copyAudio':
         copyAudio()
-    # 离开
-    elif event == 'quit':
+    elif event == sg.WIN_CLOSED:
         break
