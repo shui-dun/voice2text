@@ -10,23 +10,23 @@ START_RECORD = "开始录制"
 STOP_RECORD = "停止录制"
 
 # 音频保存位置
-audioName = r"audio\temp.wav"
+AUDIO_PATH = r"audio\temp.wav"
 
 SYSTEM_AUDIO = "系统音频"
 MIC_AUDIO = "麦克风"
 
 # 默认录制设备
-defaultRecordSource = SYSTEM_AUDIO
+DEFAULT_RECORD_SOURCE = SYSTEM_AUDIO
 
 BAIDU_API = "百度api"
 XUNFEI_API = "讯飞api"
 
 # 默认语音识别api
-defaultTextRecognition = XUNFEI_API
+DEFAULT_TEXT_RECOGNITION = XUNFEI_API
 
 COPY_TEXT_AFTER_RECORD = "复制文本"
 COPY_AUDIO_AFTER_RECORD = "复制音频"
 NOTHING_AFTER_RECORD = "不执行操作"
 
 # 在录制结束后自动执行的操作
-defaultBehaviorAfterRecord = COPY_TEXT_AFTER_RECORD
+DEFAULT_BEHAVIOR_AFTER_RECORD = COPY_TEXT_AFTER_RECORD

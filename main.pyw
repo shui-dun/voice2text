@@ -7,16 +7,16 @@ import copy2clip
 from config import *
 
 layoutFull = [[sg.Button(START_RECORD, key='record', size=(10, 1)),
-               sg.Combo([SYSTEM_AUDIO, MIC_AUDIO], default_value=defaultRecordSource, key='audioSource', readonly=True,
+               sg.Combo([SYSTEM_AUDIO, MIC_AUDIO], default_value=DEFAULT_RECORD_SOURCE, key='audioSource', readonly=True,
                         size=(10, 1))],
               [sg.Button("复制文本", key='copyText', size=(10, 1)),
-               sg.Combo([XUNFEI_API, BAIDU_API], default_value=defaultTextRecognition, key='textSource', readonly=True,
+               sg.Combo([XUNFEI_API, BAIDU_API], default_value=DEFAULT_TEXT_RECOGNITION, key='textSource', readonly=True,
                         expand_x=True)],
               [sg.Button("复制音频", key='copyAudio', size=(10, 1)),
                sg.Button("播放音频", key="play", expand_x=True)],
               [sg.Text("录制结束后", size=(10, 1)),
                sg.Combo([COPY_TEXT_AFTER_RECORD, COPY_AUDIO_AFTER_RECORD, NOTHING_AFTER_RECORD],
-                        default_value=defaultBehaviorAfterRecord, key="behaviorAfterRecord",
+                        default_value=DEFAULT_BEHAVIOR_AFTER_RECORD, key="behaviorAfterRecord",
                         readonly=True, expand_x=True)],
               [sg.Button("迷你模式", key="mini", expand_x=True)]]
 
@@ -37,15 +37,15 @@ player = None
 # 语音识别成文字并复制
 def copyText(source):
     if source == BAIDU_API:
-        result = baiduapi.voice2text(audioName)
+        result = baiduapi.voice2text(AUDIO_PATH)
     elif source == XUNFEI_API:
-        result = xunfeiapi.voice2text(audioName)
+        result = xunfeiapi.voice2text(AUDIO_PATH)
     pyperclip.copy(result)
 
 
 # 复制音频文件
 def copyAudio():
-    filePath = os.getcwd() + "\\" + audioName
+    filePath = os.getcwd() + "\\" + AUDIO_PATH
     copy2clip.clip_files([filePath])
 
 
@@ -58,7 +58,7 @@ while True:
             recorder.start()
             window.Element(event).Update(STOP_RECORD)
         elif window.Element(event).get_text() == STOP_RECORD:
-            recorder.save(audioName)
+            recorder.save(AUDIO_PATH)
             recorder = None
             window.Element(event).Update(START_RECORD)
             # 录制结束后执行的操作
@@ -73,7 +73,7 @@ while True:
         copyText(value['textSource'])
     # 播放
     elif event == 'play':
-        os.startfile(audioName)
+        os.startfile(AUDIO_PATH)
     # 复制音频
     elif event == 'copyAudio':
         copyAudio()
