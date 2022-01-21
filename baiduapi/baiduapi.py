@@ -3,11 +3,10 @@ import json
 import time
 import os
 import base64
-from baiduKey import *
+from .baiduKey import *
 import PySimpleGUI as sg
 
-baiduTokenPath = "baiduToken.json"
-
+baiduTokenPath = os.path.join(os.path.dirname(__file__), "baiduToken.json")
 
 # 获得新的token，token过期时调用
 def newToken():

@@ -1,6 +1,6 @@
-baiduKey.py
-baiduToken.json
-xunfeikey.py
-temp.wav
+baiduapi/baiduKey.py
+baiduapi/baiduToken.json
+xunfeiapi/xunfeikey.py
+audio/temp.wav
 .idea/
 __pycache__/

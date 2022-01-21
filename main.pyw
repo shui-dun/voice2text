@@ -1,9 +1,8 @@
-import baiduapi
-import xunfeiapi
+from baiduapi import baiduapi
+from xunfeiapi import xunfeiapi
 from record import Recorder
 import pyperclip
 import os
-import PySimpleGUI as sg
 import copy2clip
 from config import *
 

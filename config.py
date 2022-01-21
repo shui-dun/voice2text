@@ -10,7 +10,7 @@ START_RECORD = "开始录制"
 STOP_RECORD = "停止录制"
 
 # 音频保存位置
-audioName = "temp.wav"
+audioName = r"audio\temp.wav"
 
 SYSTEM_AUDIO = "系统音频"
 MIC_AUDIO = "麦克风"
