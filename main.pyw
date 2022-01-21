@@ -6,18 +6,23 @@ import os
 import copy2clip
 from config import *
 
-layout = [[sg.Button(START_RECORD, key='record', size=(10, 1)),
-           sg.Combo([SYSTEM_AUDIO, MIC_AUDIO], default_value=defaultRecordSource, key='audioSource', readonly=True,
-                    size=(10, 1))],
-          [sg.Button("复制文本", key='copyText', size=(10, 1)),
-           sg.Combo([XUNFEI_API, BAIDU_API], default_value=defaultTextRecognition, key='textSource', readonly=True,
-                    size=(10, 1))],
-          [sg.Button("复制音频", key='copyAudio', size=(10, 1)),
-           sg.Button("播放音频", key="play", size=(10, 1))],
-          [sg.Text("录制结束后", size=(10, 1)),
-           sg.Combo([COPY_TEXT_AFTER_RECORD, COPY_AUDIO_AFTER_RECORD, NOTHING_AFTER_RECORD],
-                    default_value=defaultBehaviorAfterRecord, key="behaviorAfterRecord",
-                    readonly=True, size=(10, 1))]]
+layoutFull = [[sg.Button(START_RECORD, key='record', size=(10, 1)),
+               sg.Combo([SYSTEM_AUDIO, MIC_AUDIO], default_value=defaultRecordSource, key='audioSource', readonly=True,
+                        size=(10, 1))],
+              [sg.Button("复制文本", key='copyText', size=(10, 1)),
+               sg.Combo([XUNFEI_API, BAIDU_API], default_value=defaultTextRecognition, key='textSource', readonly=True,
+                        expand_x=True)],
+              [sg.Button("复制音频", key='copyAudio', size=(10, 1)),
+               sg.Button("播放音频", key="play", expand_x=True)],
+              [sg.Text("录制结束后", size=(10, 1)),
+               sg.Combo([COPY_TEXT_AFTER_RECORD, COPY_AUDIO_AFTER_RECORD, NOTHING_AFTER_RECORD],
+                        default_value=defaultBehaviorAfterRecord, key="behaviorAfterRecord",
+                        readonly=True, expand_x=True)],
+              [sg.Button("迷你模式", key="mini", expand_x=True)]]
+
+layoutMini = [[sg.Button(START_RECORD, key='miniRecord'), sg.Button("完整模式", key="full")]]
+
+layout = [[sg.Column(layoutFull, key='fullLayout', visible=False), sg.Column(layoutMini, key='miniLayout')]]
 
 window = sg.Window('v2t', layout, keep_on_top=True, grab_anywhere=True, finalize=True,
                    location=(20, 70))
@@ -47,15 +52,15 @@ def copyAudio():
 while True:
     event, value = window.Read()
     # 按下了录制按钮
-    if event == 'record':
-        if window.Element('record').get_text() == START_RECORD:
+    if event == 'record' or event == 'miniRecord':
+        if window.Element(event).get_text() == START_RECORD:
             recorder = Recorder(value['audioSource'])
             recorder.start()
-            window.Element('record').Update(STOP_RECORD)
-        elif window.Element('record').get_text() == STOP_RECORD:
+            window.Element(event).Update(STOP_RECORD)
+        elif window.Element(event).get_text() == STOP_RECORD:
             recorder.save(audioName)
             recorder = None
-            window.Element('record').Update(START_RECORD)
+            window.Element(event).Update(START_RECORD)
             # 录制结束后执行的操作
             if value['behaviorAfterRecord'] == COPY_TEXT_AFTER_RECORD:
                 copyText(value['textSource'])
@@ -72,5 +77,13 @@ while True:
     # 复制音频
     elif event == 'copyAudio':
         copyAudio()
+    elif event == 'mini':
+        window.Element('fullLayout').update(visible=False)
+        window.Element('miniLayout').update(visible=True)
+        window.Element('miniRecord').Update(window.Element('record').get_text())
+    elif event == 'full':
+        window.Element('fullLayout').update(visible=True)
+        window.Element('miniLayout').update(visible=False)
+        window.Element('record').Update(window.Element('miniRecord').get_text())
     elif event == sg.WIN_CLOSED:
         break
