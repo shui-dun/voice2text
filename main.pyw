@@ -1,5 +1,5 @@
-from baiduapi import baiduapi
-from xunfeiapi import xunfeiapi
+import baiduapi
+import xunfeiapi
 from record import Recorder
 import pyperclip
 import os
