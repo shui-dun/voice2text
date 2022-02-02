@@ -36,17 +36,20 @@ player = None
 
 # 语音识别成文字并复制
 def copyText(source):
+    sg.popup_quick_message("开始识别")
     if source == BAIDU_API:
         result = baiduapi.voice2text(AUDIO_PATH)
     elif source == XUNFEI_API:
         result = xunfeiapi.voice2text(AUDIO_PATH)
     pyperclip.copy(result)
+    sg.popup_quick_message("识别结果已复制到剪切板")
 
 
 # 复制音频文件
 def copyAudio():
     filePath = os.getcwd() + "\\" + AUDIO_PATH
     copy2clip.clip_files([filePath])
+    sg.popup_quick_message("音频文件已复制到剪切板")
 
 
 while True:
